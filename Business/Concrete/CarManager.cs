@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Core.Utilities.Results;
 
 namespace Business.Concrete
 {
@@ -18,19 +19,24 @@ namespace Business.Concrete
             _cardal = cardal;
         }
 
-        public List<CarDetailsDto> GetAll()
+        public IResult Add(Car car)
         {
-            return _cardal.GetCarDetails();
+            throw new NotImplementedException();
         }
 
-        public List<Car> GetByColorId(int colorıd)
+        public IDataResult<List<CarDetailsDto>> GetAll()
         {
-            return _cardal.GetAll(p => p.ColorId == colorıd);
+            throw new NotImplementedException();
         }
 
-        public Car GetById(int Id)
+        public IDataResult<List<Car>> GetByColorId(int colorıd)
         {
-            return _cardal.Get(p => p.CarId == Id);
+            throw new NotImplementedException();
+        }
+
+        public IDataResult<Car> GetById(int Id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entity.Concrete;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -17,34 +18,17 @@ namespace Business.Concrete
             this._colordal = _colordal;
         }
 
-        public void Add(Color entity)
+        public IResult Add(Color brand)
         {
-            if (entity.ColorName==null)
-            {
-                Console.WriteLine("HATA: lütfen Ad veya Günlük ücret tutarını kontrol ediniz.");
-            }
-            else
-            {
-                _colordal.Add(entity);
-            }
+            throw new NotImplementedException();
         }
 
-        public void Delete(Color entity)
+        public IDataResult<List<Color>> GetAll()
         {
-            _colordal.Delete(entity);
+            throw new NotImplementedException();
         }
 
-        public Color Get(Expression<Func<Color, bool>> filter)
-        {
-           return _colordal.Get(filter);
-        }
-
-        public List<Color> GetAll(Expression<Func<Color, bool>> filter = null)
-        {
-          return  _colordal.GetAll(filter);
-        }
-
-        public void Update(Color entity)
+        public IDataResult<Color> GetById(int Id)
         {
             throw new NotImplementedException();
         }
