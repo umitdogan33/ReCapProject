@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Core.DataAccess;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entity.Concrete;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -18,43 +20,19 @@ namespace Business.Concrete
             _branddal = branddal;
         }
 
-        public void Add(Brand entity)
+        public IResult Add(Brand brand)
         {
-            if (entity.BrandName==null)
-            {
-                Console.WriteLine("alanlar boş bırakılamaz");
-            }
-            else
-            {
-                _branddal.Add(entity);
-            }
+            throw new NotImplementedException();
         }
 
-        public void Delete(Brand entity)
+        public IDataResult<List<Brand>> GetAll()
         {
-            _branddal.Delete(entity);
+            throw new NotImplementedException();
         }
 
-        public Brand Get(Expression<Func<Brand, bool>> filter)
+        public IDataResult<Brand> GetById(int Id)
         {
-            return _branddal.Get(filter);
-        }
-
-        public List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null)
-        {
-            return _branddal.GetAll();
-        }
-
-        public void Update(Brand entity)
-        {
-            if (entity.BrandName==null)
-            {
-                Console.WriteLine("istenilen alanlar boş bırakılamaz");
-            }
-            else
-            {
-                _branddal.Update(entity);
-            }
+            throw new NotImplementedException();
         }
     }
 }

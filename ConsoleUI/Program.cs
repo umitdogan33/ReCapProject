@@ -12,6 +12,7 @@ namespace ConsoleUI
             foreach (var item in car.GetByColorId(1))
             {
                 Console.WriteLine(item.CarName);
+            
             }
             
             
