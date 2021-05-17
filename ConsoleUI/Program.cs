@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using System;
 
@@ -8,24 +9,16 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager car = new CarManager(new EfCarDal());
-            foreach (var item in car.GetByColorId(1))
-            {
-                Console.WriteLine(item.CarName);
-            
-            }
+            //sadece rental'deki buisness bölümünü doldurdum
+            //diğer methodları test etmek isteyen arkadaşlar methodları dataaccess üzerinden çağırabilir
             
             
+            RentalManager manager = new RentalManager(new EfRentalDal());
+           
             
+        
         }
 
-        private static void DetailsTest()
-        {
-            EfCarDal efCarDal = new EfCarDal();
-            foreach (var item in efCarDal.GetCarDetails())
-            {
-                Console.WriteLine(item.CarName + "/" + item.ColorName);
-            }
-        }
+
     }
 }

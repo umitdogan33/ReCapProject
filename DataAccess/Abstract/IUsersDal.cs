@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccess.Abstract
+namespace DataAccess.Concrete.EntityFramework
 {
-    public interface IColorDal:IEntityRepository<Color>
+  public interface IUsersDal:IEntityRepository<User>
     {
 
     }

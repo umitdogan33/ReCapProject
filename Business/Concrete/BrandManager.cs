@@ -22,7 +22,8 @@ namespace Business.Concrete
 
         public IResult Add(Brand brand)
         {
-            throw new NotImplementedException();
+            _branddal.Add(brand);
+            return new SuccessResult("marka eklendi");
         }
 
         public IDataResult<List<Brand>> GetAll()
