@@ -21,17 +21,23 @@ namespace Business.Concrete
 
         public IResult Add(Car car)
         {
-            throw new NotImplementedException();
+            _cardal.Add(car);
+            return new SuccessResult("ekleme başarılı");
         }
 
-        public IDataResult<List<CarDetailsDto>> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Car>>(_cardal.GetAll());
+        }
+
+        public IDataResult<List<CarDetailsDto>> GetAllDetails()
+        {
+            return new SuccessDataResult<List<CarDetailsDto>>(_cardal.GetCarDetails());
         }
 
         public IDataResult<List<Car>> GetByColorId(int colorıd)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Car>>(_cardal.GetAll(p=> p.ColorId==colorıd));
         }
 
         public IDataResult<Car> GetById(int Id)
