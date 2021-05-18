@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Entities.Concrete;
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -45,6 +45,18 @@ namespace WebAPI.Controllers
         public IActionResult GetByColorId(int Id)
         {
             var result = _carservice.GetByColorId(Id);
+            if (result.Success==true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("Add")]
+
+        public IActionResult Add(Car car)
+        {
+            var result = _carservice.Add(car);
             if (result.Success==true)
             {
                 return Ok(result);
