@@ -1,4 +1,5 @@
 ﻿using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -14,6 +15,7 @@ namespace Business.Abstract
         IDataResult<List<Car>> GetByColorId(int colorıd);
         IResult Add(Car car);
         IDataResult<List<CarDetailsDto>> GetAllDetails();
+        IResult Delete(Car car);
 
     }
 }

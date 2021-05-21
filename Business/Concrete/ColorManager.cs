@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -17,20 +19,21 @@ namespace Business.Concrete
         {
             this._colordal = _colordal;
         }
-
-        public IResult Add(Color brand)
+        [ValidationAspect(typeof(ColorValidator))]
+        public IResult Add(Color color)
         {
-            throw new NotImplementedException();
+            _colordal.Add(color);
+           return new SuccessResult("ekleme başarılı");
         }
 
         public IDataResult<List<Color>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Color>>(_colordal.GetAll());
         }
 
         public IDataResult<Color> GetById(int Id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Color>(_colordal.Get(p=> p.ColorId==Id));
         }
     }
 }

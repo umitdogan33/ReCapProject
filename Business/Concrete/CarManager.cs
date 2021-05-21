@@ -7,6 +7,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Core.Utilities.Results;
+using Business.Constans;
+using Core.Utilities.Interceptors;
+using Core.Aspects.Autofac.Validation;
+using Business.ValidationRules.FluentValidation;
 
 namespace Business.Concrete
 {
@@ -18,11 +22,17 @@ namespace Business.Concrete
         {
             _cardal = cardal;
         }
-
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
             _cardal.Add(car);
-            return new SuccessResult("ekleme başarılı");
+            return new SuccessResult(Messages.Added);
+        }
+
+        public IResult Delete(Car car)
+        {
+            _cardal.Delete(car);
+            return new SuccessResult("silme başarılı");
         }
 
         public IDataResult<List<Car>> GetAll()
@@ -42,7 +52,7 @@ namespace Business.Concrete
 
         public IDataResult<Car> GetById(int Id)
         {
-            throw new NotImplementedException();
+            return new ErrorDataResult<Car>(_cardal.Get(p=> p.CarId==Id));
         }
     }
 }

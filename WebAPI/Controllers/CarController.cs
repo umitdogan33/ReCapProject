@@ -10,11 +10,11 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarController : ControllerBase
+    public class CarsController : ControllerBase
     {
         ICarService _carservice;
 
-        public CarController(ICarService carservice)
+        public CarsController(ICarService carservice)
         {
             _carservice = carservice;
         }
@@ -75,6 +75,19 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-    
+
+        [HttpPost("Delete")]
+
+        public IActionResult Delete(Car car)
+        {
+            var result = _carservice.Delete(car);
+            if (result.Success==true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(car);
+        }
+
+	}
     }
-}
+
