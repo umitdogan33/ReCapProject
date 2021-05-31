@@ -13,7 +13,7 @@ namespace Business.ValidationRules.FluentValidation
 
             RuleFor(p => p.ColorName).NotEmpty();
 
-
+            
         }
     }
 }

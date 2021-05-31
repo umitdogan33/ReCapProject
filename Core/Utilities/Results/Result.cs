@@ -9,14 +9,14 @@ namespace Core.Utilities.Results
         
         public Result(bool success,string messages):this(success)
         {
-            Success = success;
+            Message = messages;
         }
 
         public Result(bool success)
         {
             Success = success;
         }
-
+        
         public string Message { get; }
         public bool Success { get; }
     }

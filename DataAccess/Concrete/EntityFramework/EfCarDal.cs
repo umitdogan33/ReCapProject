@@ -26,7 +26,7 @@ namespace DataAccess.Concrete.EntityFramework
                 return results.ToList();
 
 
-
+                
             }
         }
     }

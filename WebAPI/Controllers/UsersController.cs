@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Entities.Concrete;
 
 namespace WebAPI.Controllers
 {
@@ -31,6 +32,17 @@ namespace WebAPI.Controllers
            
 
             return BadRequest(result.Message);
+        }
+
+        [HttpPost("Delete")]
+        public IActionResult Delete(User user)
+        {
+            var result = _userService.Delete(user);
+            if (result.Success==true)
+            {
+                return  Ok(result);
+            }
+            return BadRequest("geçersiz istek");
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Core.Entities.Concrete;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constans
@@ -16,11 +18,20 @@ namespace Business.Constans
         public static string CarImageDeleted = "silme başarılı";
         public static string CarImageNotFound = "resim bulunamadı";
         public static string CarImageUpdated = "güncelleme başarılı";
-        internal static string AddSingular;
-        internal static string UpdateSingular;
-        internal static string DeleteSingular;
-        internal static string NotExist;
-        internal static string InvalidFileExtension;
-        internal static string ImageNumberLimitExceeded;
+        public static string AddSingular = "resim eklendi ";
+        public static string UpdateSingular = "resim güncellendi";
+        public static string DeleteSingular = "resim silindi";
+        public static string NotExist = "bulunamıyor";
+        public static string InvalidFileExtension = "bulunamayan dosya yolu";
+        public static string ImageNumberLimitExceeded = "resim sınırı yetersiz";
+        public static string AuthorizationDenied = "AuthorizationDenied";
+        public static string AccessTokenCreated = "token oluşturuldu";
+        public static string UserRegistered = "kayır başarılı";
+        public static string PasswordError = "şifre hatası";
+        public static string SuccessfulLogin = "Giriş Başarılı";
+        public static string UserNotFound = "kullanıcı bulunamadı";
+        public static string UserAlreadyExists = "kullanıcı zaten kayıtlı";
+        internal static string Updated;
+        internal static string Deleted;
     }
 }

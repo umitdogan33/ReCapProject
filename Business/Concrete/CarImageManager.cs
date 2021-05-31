@@ -30,8 +30,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Add(IFormFile image, CarImage img)
         {
-            IResult result = BusinessRules.Run(CheckIfCarIsExists(img.CarId),
-                                           CheckIfFileExtensionValid(image.FileName),
+            IResult result = BusinessRules.Run(
                                            CheckIfImageNumberLimitForCar(img.CarId));
 
             if (result != null)
@@ -62,11 +61,11 @@ namespace Business.Concrete
 
         public IResult Delete(CarImage img)
         {
-            IResult result = BusinessRules.Run(CheckIfImagePathIsExists(img.ImagePath));
-            if (result != null)
-            {
-                return result;
-            }
+            //IResult result = BusinessRules.Run(CheckIfImagePathIsExists(img.ImagePath));
+            //if (result != null)
+            //{
+            //    return result;
+            //}
 
             _carImageDal.Delete(img);
             FileOperationsHelper.Delete(img.ImagePath);
@@ -153,9 +152,10 @@ namespace Business.Concrete
 
         private IResult CheckIfImageNumberLimitForCar(int carId)
         {
-            if (_carImageDal.GetAll(x => x.CarId == carId).Count == 5)
+            var result = _carImageDal.GetAll(p => p.CarId == carId).Count;
+            if (result == 5)
             {
-                return new ErrorResult(Messages.ImageNumberLimitExceeded);
+                return new ErrorResult("geçersiz");
             }
             return new SuccessResult();
         }
