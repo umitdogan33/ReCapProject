@@ -31,7 +31,9 @@ namespace Business.Constans
         public static string SuccessfulLogin = "Giriş Başarılı";
         public static string UserNotFound = "kullanıcı bulunamadı";
         public static string UserAlreadyExists = "kullanıcı zaten kayıtlı";
-        internal static string Updated;
-        internal static string Deleted;
+        public static string Updated = "Güncelleme başarılı";
+        public static string Deleted = "silme başarılı";
+        public static string SameCarName = "bu araba isminde araba var";
+        public static string Addedustomer = "müşteri eklendi";
     }
 }

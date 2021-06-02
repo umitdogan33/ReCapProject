@@ -6,6 +6,9 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using Core.Utilities.Business;
+using Business.Constans;
 
 namespace Business.Concrete
 {
@@ -20,8 +23,19 @@ namespace Business.Concrete
         
         public IResult Add(Customer car)
         {
+            IResult result = BusinessRules.Run(SameCustomerName(car.UserId));
+
+            if (result != null)
+            {
+                return result;
+            }
+
             _customerDal.Add(car);
-           return new SuccessResult("ekleme işlemi başarılı");
+            return new SuccessResult(Messages.Addedustomer);
+
+
+
+            //return new SuccessResult("ekleme işlemi başarılı");
         }
 
         public IResult Delete(Customer customer)
@@ -45,5 +59,19 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Customer>(_customerDal.Get(p=> p.Id==Id));
         }
+
+        private IResult SameCustomerName(int Userıd)
+        {
+            var result = _customerDal.GetAll(p => p.UserId == Userıd).Any();
+            if (result)
+            {
+                return new ErrorResult("aynı isimde kullanıcı var");
+            }
+
+            return new SuccessResult();
+        }
+       
+        
+        
     }
 }

@@ -12,6 +12,7 @@ using Core.Utilities.Interceptors;
 using Core.Aspects.Autofac.Validation;
 using Business.ValidationRules.FluentValidation;
 using Business.BusinessAspects.Autofac;
+using Core.Utilities.Business;
 
 namespace Business.Concrete
 {
@@ -27,6 +28,11 @@ namespace Business.Concrete
         [SecuredOperation("product.add,admin")]
         public IResult Add(Car car)
         {
+            IResult Result = BusinessRules.Run(SameCarName(car.CarName));
+            if (Result!=null)
+            {
+                return Result;
+            }
             _cardal.Add(car);
             return new SuccessResult(Messages.Added);
         }
@@ -55,6 +61,16 @@ namespace Business.Concrete
         public IDataResult<Car> GetById(int Id)
         {
             return new ErrorDataResult<Car>(_cardal.Get(p=> p.CarId==Id));
+        }
+
+        private IResult SameCarName(string CarName)
+        {
+           var result =  _cardal.GetAll(p=> p.CarName==CarName).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.SameCarName);
+            }
+            return new SuccessResult(Messages.Added);
         }
     }
 }

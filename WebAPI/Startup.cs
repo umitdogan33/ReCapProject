@@ -1,5 +1,7 @@
 using Business.Abstract;
 using Business.Concrete;
+using Core.DependencyResolvers;
+using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
@@ -38,10 +40,7 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //deneme
-            services.AddControllers();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //deneme
+ 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -65,9 +64,9 @@ namespace WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
-            //deneme
-            ServiceTool.Create(services);
-            //deneme
+            services.AddOpendecyResolvers(new ICoreModule[] {
+            new CoreModule()
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
