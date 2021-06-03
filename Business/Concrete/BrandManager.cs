@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.DataAccess;
 using Core.Utilities.Business;
@@ -28,6 +30,8 @@ namespace Business.Concrete
 
 
         [ValidationAspect(typeof(BrandValidator))]
+        [CacheRemoveAspect("get")]
+        [TransactionScopeAspect]
         public IResult Add(Brand brand)
         {
             IResult Result = BusinessRules.Run(SameBrandName(brand.BrandName));
@@ -39,17 +43,10 @@ namespace Business.Concrete
             _branddal.Add(brand);
         }
 
-        private IResult SameBrandName(string brand)
-        {
-            var result = _branddal.GetAll(p => p.BrandName == brand).Any();
-            if (result)
-            {
-                return new ErrorResult(Messages.SameBrandName);
-            }
-            
-            return new SuccessResult(Messages.AddedBrand);
-        }
+       
 
+        [CacheAspect]
+        
         public IDataResult<List<Brand>> GetAll()
         {
            return new SuccessDataResult<List<Brand>>(_branddal.GetAll());
@@ -59,6 +56,17 @@ namespace Business.Concrete
         public IDataResult<Brand> GetById(int Id)
         {
             return new SuccessDataResult<Brand>(_branddal.Get(p => p.BrandId == Id));
+        }
+
+        private IResult SameBrandName(string brand)
+        {
+            var result = _branddal.GetAll(p => p.BrandName == brand).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.SameBrandName);
+            }
+
+            return new SuccessResult(Messages.AddedBrand);
         }
     }
 }

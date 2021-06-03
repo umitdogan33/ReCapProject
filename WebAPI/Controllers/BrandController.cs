@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.Concrete;
 
 namespace WebAPI.Controllers
 {
@@ -20,7 +21,7 @@ namespace WebAPI.Controllers
             _brandDal = brandDal;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public ActionResult GetAll()
         {
            var result = _brandDal.GetAll();
@@ -30,5 +31,17 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet("Add")]
+        public IActionResult Add(Brand brand)
+        {
+            var result = _brandDal.Add(brand);
+            if (result.Success==true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
     }
 }
