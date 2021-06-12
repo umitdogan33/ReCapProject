@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
             _rentalService = rentalService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             var result = _rentalService.GetAll();
@@ -28,6 +28,19 @@ namespace WebAPI.Controllers
                 return Ok(result);
             }
             return BadRequest(result);
+        }
+
+        [HttpGet("GetAllDetails")]
+        public IActionResult GetDetails()
+        {   
+            var result = _rentalService.GetAllDetails();
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        
         }
     }
 }

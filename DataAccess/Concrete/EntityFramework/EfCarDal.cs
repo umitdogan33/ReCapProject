@@ -14,14 +14,23 @@ namespace DataAccess.Concrete.EntityFramework
     {
        
 
-        public List<CarDetailsDto> GetCarDetails()
+        public List<CarDetailsDto> GetCarDetails(Expression<Func<Car, bool>> filter = null)
         {
             using (ReCapContext context = new ReCapContext())
             {
-                var results = from ca in context.Cars
+                var results = from ca in filter == null ? context.Cars : context.Cars.Where(filter)
+
                               join b in context.Brands on ca.BrandId equals b.BrandId
                               join c in context.Colors on ca.ColorId equals c.ColorId
-                              select new CarDetailsDto { CarId = ca.CarId,CarName=ca.CarName,BrandName=b.BrandName,ColorName=c.ColorName,DailyPrice=ca.DailyPrice};
+                              select new CarDetailsDto 
+                              {
+                              Id=ca.CarId,CarName=ca.CarName,
+                              BrandName=b.BrandName,
+                              ColorName=c.ColorName,
+                              DailyPrice=ca.DailyPrice,
+                              Images =
+                              (from i in context.CarImages where i.CarId == ca.CarId select i.ImagePath).ToList()
+                              };
 
                 return results.ToList();
 

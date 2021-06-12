@@ -29,18 +29,23 @@ namespace Business.Concrete
 
 
 
-        [ValidationAspect(typeof(BrandValidator))]
-        [CacheRemoveAspect("get")]
-        [TransactionScopeAspect]
+
+
+
+
+        // [ValidationAspect(typeof(BrandValidator))]
+        //[CacheRemoveAspect("get")]
+        //[TransactionScopeAspect]
         public IResult Add(Brand brand)
         {
-            IResult Result = BusinessRules.Run(SameBrandName(brand.BrandName));
-            if (Result!=null)
-            {
-                return Result;
-            }
-            return new SuccessResult(Messages.AddedBrand);
+            //IResult Result = BusinessRules.Run(SameBrandName(brand.BrandName));
+            //if (Result!=null)
+            //{
+            //    return Result;
+            //}
             _branddal.Add(brand);
+            return new SuccessResult(Messages.AddedBrand);
+            
         }
 
        

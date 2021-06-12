@@ -23,15 +23,5 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<CarImage>().ToTable("CarImages");
-            modelBuilder.Entity<CarImage>().HasKey(x=> x.Id);
-
-            modelBuilder.Entity<CarImage>().Property(x=> x.Id).HasColumnName("Id");
-            modelBuilder.Entity<CarImage>().Property(x => x.CarId).HasColumnName("CarId");
-            modelBuilder.Entity<CarImage>().Property(x => x.ImagePath).HasColumnName("ImagePath");
-            modelBuilder.Entity<CarImage>().Property(x => x.Date_).HasColumnName("Date_");
-        }
     }
 }
