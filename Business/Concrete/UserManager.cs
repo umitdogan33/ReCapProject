@@ -8,6 +8,7 @@ using System.Linq;
 using Business.Constans;
 using Core.Utilities.Business;
 using Core.Entities.Concrete;
+using Core.Utilities.Security.Hashing;
 
 namespace Business.Concrete
 {
@@ -48,7 +49,23 @@ namespace Business.Concrete
             
         }
 
-       
+        public IResult EditProfil(User user, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+            HasingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            var updatedUser = new User
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Status = user.Status
+            };
+            _userDal.Update(updatedUser);
+            return new SuccessResult(Messages.UserUpdated);
+        }
 
         public IDataResult<List<User>> GetAll()
         {
@@ -63,12 +80,18 @@ namespace Business.Concrete
 
         public User GetByMail(string mail)
         {
-            return (_userDal.Get(u => u.Email == mail));
+            var user= (_userDal.Get(u => u.Email == mail));
+            return user;
         }
 
-        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        public IDataResult<List<OperationClaim>> GetClaims(int id)
         {
-            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
+            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(id));
+        }
+
+        public IDataResult<User> GetUserByEmail(string email)
+        {
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
         }
 
         public IResult Update(User user)
@@ -90,6 +113,8 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<User>(_userDal.Get(p=> p.Id==Id));
         }
+
+        
 
         private IResult SameUserName(string Email)
         {

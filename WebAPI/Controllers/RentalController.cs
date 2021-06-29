@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.Concrete;
 
 namespace WebAPI.Controllers
 {
@@ -41,6 +42,18 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         
+        }
+
+        [HttpPost("Add")]
+        public IActionResult Add(Rental rental)
+        {
+            var result = _rentalService.Add(rental);
+            if (result.Success==true)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
         }
     }
 }

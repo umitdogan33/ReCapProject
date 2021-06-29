@@ -9,6 +9,7 @@ using System.Text;
 using System.Linq;
 using Core.Utilities.Business;
 using Business.Constans;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -20,58 +21,38 @@ namespace Business.Concrete
         {
             _customerDal = customerDal;
         }
-        
-        public IResult Add(Customer car)
-        {
-            IResult result = BusinessRules.Run(SameCustomerName(car.UserId));
-
-            if (result != null)
-            {
-                return result;
-            }
-
-            _customerDal.Add(car);
-            return new SuccessResult(Messages.Addedustomer);
-
-
-
-            //return new SuccessResult("ekleme işlemi başarılı");
-        }
-
-        public IResult Delete(Customer customer)
-        {
-            _customerDal.Delete(customer);
-           return new SuccessResult("silme işlemi başarılı");
-        }
 
         public IDataResult<List<Customer>> GetAll()
         {
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
         }
 
-        public IDataResult<List<Customer>> GetByUserId(int customer)
+        public IResult Add(Customer customer)
         {
-            var result = _customerDal.GetAll(p => p.UserId == customer);
-            return new SuccessDataResult<List<Customer>>(result);
+           _customerDal.Add(customer);
+          return new SuccessResult(Messages.Added);
         }
 
-        public IDataResult<Customer> GetById(int Id)
+        public IResult Update(Customer customer)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(p=> p.Id==Id));
+            _customerDal.Update(customer);
+            return new SuccessResult("güncelleme işlemi başarılı");
         }
 
-        private IResult SameCustomerName(int Userıd)
+        public IResult Delete(Customer customer)
         {
-            var result = _customerDal.GetAll(p => p.UserId == Userıd).Any();
-            if (result)
-            {
-                return new ErrorResult("aynı isimde kullanıcı var");
-            }
-
-            return new SuccessResult();
+            _customerDal.Delete(customer);
+            return new SuccessResult("silme başarılı");
         }
-       
-        
-        
+
+        public IDataResult<Customer> GetById(int id)
+        {
+            return new SuccessDataResult<Customer>(_customerDal.Get(P =>P.Id==id));
+        }
+
+        public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
+        {
+           return new SuccessDataResult<List<CustomerDetailDto>>( _customerDal.GetCustomerDetails());
+        }
     }
 }

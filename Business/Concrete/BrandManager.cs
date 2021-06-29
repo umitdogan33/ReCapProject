@@ -38,19 +38,23 @@ namespace Business.Concrete
         //[TransactionScopeAspect]
         public IResult Add(Brand brand)
         {
-            //IResult Result = BusinessRules.Run(SameBrandName(brand.BrandName));
-            //if (Result!=null)
-            //{
-            //    return Result;
-            //}
+            IResult Result = BusinessRules.Run(SameBrandName(brand.BrandName));
+            if (Result != null)
+            {
+                return Result;
+            }
             _branddal.Add(brand);
             return new SuccessResult(Messages.AddedBrand);
             
         }
 
-       
+        public IResult Delete(Brand brand)
+        {
+            _branddal.Delete(brand);
+            return new SuccessResult(Messages.Deleted);
+        }
 
-        [CacheAspect]
+      
         
         public IDataResult<List<Brand>> GetAll()
         {
@@ -61,6 +65,13 @@ namespace Business.Concrete
         public IDataResult<Brand> GetById(int Id)
         {
             return new SuccessDataResult<Brand>(_branddal.Get(p => p.BrandId == Id));
+        }
+
+        public IResult Update(Brand brand)
+        {
+            _branddal.Update(brand);
+            return new SuccessResult(Messages.Updated);
+            
         }
 
         private IResult SameBrandName(string brand)

@@ -15,24 +15,23 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (ReCapContext context = new ReCapContext())
             {
-                   var result = from c in context.Rentals
-                             join ax in context.Cars on c.CarId equals ax.CarId
-                             join ac in context.Brands on ax.BrandId equals ac.BrandId
-                             join cl in context.Colors on ax.ColorId equals cl.ColorId
-                             join cs in context.Customers on c.CustomerId equals cs.Id
-                             join us in context.Users on cs.UserId equals us.Id
+                var result = from ren in context.Rentals
+                             join ca in context.Cars on ren.CarId equals ca.CarId
+                             join ba in context.Brands on ca.BrandId equals ba.BrandId
+                             join cl in context.Colors on ca.ColorId equals cl.ColorId
+                             join us in context.Users on ren.CustomerId equals us.Id
 
                              select new RentalsDetailDto
                              {
-                                  Id=c.Id,   
-                                 BrandName = ac.BrandName,
-                                 CustomerLastName=us.LastName,
-                                 CustomerName=us.FirstName,
-                                 DailyPrice = ax.DailyPrice,
-                                 Email = us.Email,
-                                 ModelYear = ax.ModelYear,
-                                 RentDate = c.RentDate,
-                                 ReturnDate = c.ReturnDate
+                                 Id = ren.Id,
+                                 CarId = ca.CarId,
+                                 DailyPrice = ca.DailyPrice,
+                                 RentDate = ren.RentDate,
+                                 ReturnDate = ren.ReturnDate,
+                                 UserNameLastName = us.FirstName + us.LastName,
+                                 TotalPrice = 0,
+                                 CarName = ca.CarName,
+                                 BrandName = ba.BrandName
                              };
 
 

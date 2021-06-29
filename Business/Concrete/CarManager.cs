@@ -26,11 +26,11 @@ namespace Business.Concrete
             _cardal = cardal;
         }
         [ValidationAspect(typeof(CarValidator))]
-       // [SecuredOperation("product.add,admin")]
+        // [SecuredOperation("product.add,admin")]
         public IResult Add(Car car)
         {
             IResult Result = BusinessRules.Run(SameCarName(car.CarName));
-            if (Result!=null)
+            if (Result != null)
             {
                 return Result;
             }
@@ -43,12 +43,12 @@ namespace Business.Concrete
             _cardal.Delete(car);
             return new SuccessResult("silme başarılı");
         }
-        [CacheAspect]
+       
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_cardal.GetAll());
         }
-        [CacheAspect]
+        
         public IDataResult<List<CarDetailsDto>> GetAllDetails()
         {
             return new SuccessDataResult<List<CarDetailsDto>>(_cardal.GetCarDetails());
@@ -56,22 +56,52 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailsDto>> GetByBrandId(int Brandid)
         {
-           return new SuccessDataResult<List<CarDetailsDto>>(_cardal.GetCarDetails(P=> P.BrandId==Brandid));
+            return new SuccessDataResult<List<CarDetailsDto>>(_cardal.GetCarDetails(P => P.BrandId == Brandid));
         }
 
         public IDataResult<List<CarDetailsDto>> GetByBrandIdAndColorId(int brandId, int colorid)
         {
-            return new SuccessDataResult<List<CarDetailsDto>>(_cardal.GetCarDetails(P => P.BrandId == brandId && P.ColorId==colorid));
+            if (brandId != 0)
+            {
+                return new SuccessDataResult<List<CarDetailsDto>>(_cardal.GetCarDetails(P => P.BrandId == brandId && P.ColorId == colorid));
+            }
+
+            if (colorid != 0)
+            {
+                return new SuccessDataResult<List<CarDetailsDto>>(_cardal.GetCarDetails(P => P.BrandId == brandId && P.ColorId == colorid));
+            }
+
+
+
+            return new SuccessDataResult<List<CarDetailsDto>>(_cardal.GetCarDetails());
         }
 
         public IDataResult<List<CarDetailsDto>> GetByColorId(int colorid)
         {
-            return new SuccessDataResult<List<CarDetailsDto>>(_cardal.GetCarDetails(p=> p.ColorId==colorid));
+            return new SuccessDataResult<List<CarDetailsDto>>(_cardal.GetCarDetails(p => p.ColorId == colorid));
         }
 
         public IDataResult<Car> GetById(int Id)
         {
-            return new ErrorDataResult<Car>(_cardal.Get(p=> p.CarId==Id));
+            return new SuccessDataResult<Car>(_cardal.Get(p => p.CarId == Id));
+        }
+
+
+        public IDataResult<Car> GetCarsByCarId(int carId)
+        {
+            return new SuccessDataResult<Car>(_cardal.Get(p => p.CarId == carId));
+        }
+
+        public IDataResult<CarDetailsDto> GetDetailsByCarId(int Carid)
+        {
+            return new SuccessDataResult<CarDetailsDto>(_cardal.GetCarDetail(p=> p.CarId== Carid));
+        }
+
+        public IResult Update(Car car)
+        {
+            _cardal.Update(car);
+            return new SuccessResult();
+          
         }
 
         private IResult SameCarName(string CarName)

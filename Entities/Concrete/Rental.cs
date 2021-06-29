@@ -7,7 +7,6 @@ namespace Entities.Concrete
 {
   public class Rental:IEntity
     {
-        //hocam 1 dakika
         public int Id{ get; set; }
         public int CarId { get; set; }
         public int CustomerId { get; set; }

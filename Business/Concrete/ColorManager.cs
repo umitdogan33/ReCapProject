@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
@@ -26,6 +27,12 @@ namespace Business.Concrete
            return new SuccessResult("ekleme başarılı");
         }
 
+        public IResult Delete(Color color)
+        {
+            _colordal.Delete(color);
+            return new SuccessResult(Messages.CarImageDeleted);
+        }
+
         public IDataResult<List<Color>> GetAll()
         {
            var result = _colordal.GetAll();
@@ -35,6 +42,12 @@ namespace Business.Concrete
         public IDataResult<Color> GetById(int Id)
         {
             return new SuccessDataResult<Color>(_colordal.Get(p=> p.ColorId==Id));
+        }
+
+        public IResult Update(Color color)
+        {
+            _colordal.Update(color);
+            return new SuccessResult(Messages.CarImageUpdated);
         }
     }
 }

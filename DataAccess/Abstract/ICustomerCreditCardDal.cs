@@ -1,7 +1,9 @@
-﻿namespace DataAccess.Abstract
+﻿using Core.DataAccess;
+using Entities.Concrete;
+
+namespace DataAccess.Abstract
 {
-    public interface ICustomerCreditCardDal
+    public interface ICustomerCreditCardDal:IEntityRepository<CustomerCreditCard>
     {
-        
     }
 }

@@ -22,13 +22,8 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var result = _rentaldal.Get(p=> p.CarId== rental.CarId);
+            //var result = _rentaldal.Get(p=> p.CarId== rental.CarId);
 
-            if (result.ReturnDate > DateTime.Now)
-            {
-               return new ErrorResult("araba henüz teslim edilmemiş");
-            }
-           
                 _rentaldal.Add(rental);
                 return new SuccessResult("başarılı bir şekilde kiralandı");
             

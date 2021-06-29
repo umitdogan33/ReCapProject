@@ -110,6 +110,41 @@ namespace WebAPI.Controllers
         
         }
 
+
+        [HttpGet("GetCarsDetailByCarId")]
+        public IActionResult GetCarsByCarId(int Id) 
+        {
+            var result = _carservice.GetDetailsByCarId(Id);
+            if (result.Success==true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("Update")]
+
+        public IActionResult Update(Car car)
+        {
+            var result = _carservice.Update(car);
+            if (result.Success == true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(car);
+        }
+
+        [HttpGet("GetCarByCarId")]
+        public IActionResult GetCarByCarId(int Id)
+        {
+            var result = _carservice.GetCarsByCarId(Id);
+            if (result.Success==true)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
     }
     }
 

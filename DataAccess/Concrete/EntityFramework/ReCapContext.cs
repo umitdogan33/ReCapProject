@@ -3,6 +3,7 @@ using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
@@ -11,7 +12,8 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ReCapProject;Trusted_Connection=True");
+            //((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 180;
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=ReCapProject;Trusted_Connection=True");
         }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Car> Cars { get; set; }
@@ -22,6 +24,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<CarImage> CarImages { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
-
+        public DbSet<Payment> Payment { get; set; }
+        public DbSet<CustomerCreditCard> CustomerCreditCard { get; set; }
     }
 }

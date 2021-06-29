@@ -35,6 +35,7 @@ namespace Business.Constans
         public static string Deleted = "silme başarılı";
         public static string SameCarName = "bu araba isminde araba var";
         public static string Addedustomer = "müşteri eklendi";
-        internal static string CarImageLimit;
+        internal static string CarImageLimit = "limit hatası";
+        internal static string UserUpdated = "profil güncellendi";
     }
 }

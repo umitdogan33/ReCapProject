@@ -14,17 +14,17 @@ namespace WebAPI.Controllers
     [ApiController]
     public class BrandController : ControllerBase
     {
-        IBrandService _brandDal;
+        IBrandService _brandService;
 
-        public BrandController(IBrandService brandDal)
+        public BrandController(IBrandService brandService)
         {
-            _brandDal = brandDal;
+            _brandService = brandService;
         }
 
         [HttpGet("GetAll")]
         public ActionResult GetAll()
         {
-           var result = _brandDal.GetAll();
+           var result = _brandService.GetAll();
             if (result.Success==true)
             {
                 return Ok(result);
@@ -35,11 +35,37 @@ namespace WebAPI.Controllers
         [HttpPost("Add")]
         public IActionResult Add(Brand brand)
         {
-            var result = _brandDal.Add(brand);
+            var result = _brandService.Add(brand);
             if (result.Success==true)
             {
                 return Ok(result);
             }
+            return BadRequest(result);
+        }
+
+
+        [HttpPost("Delete")]
+        public IActionResult Delete(Brand brand) 
+        {
+            var result = _brandService.Delete(brand);
+            if (result.Success==true)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+
+        [HttpPost("Update")]
+        public IActionResult Update(Brand brand) 
+        {
+            var result = _brandService.Update(brand);
+            if (result.Success==true)
+            {
+                return Ok(result);
+            }
+
             return BadRequest(result);
         }
 

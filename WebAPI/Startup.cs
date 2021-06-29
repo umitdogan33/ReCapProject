@@ -8,6 +8,7 @@ using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using WebAPI.Middlewares;
 
 namespace WebAPI
 {
@@ -79,8 +80,10 @@ namespace WebAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
             }
             app.ConfigureCustomExceptionMiddleware();
+            
+            
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200/").AllowAnyHeader().AllowAnyOrigin());
-
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -89,6 +92,7 @@ namespace WebAPI
             //deneme
 
             app.UseAuthorization();
+            app.ConfigreAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

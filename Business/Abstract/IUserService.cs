@@ -14,8 +14,11 @@ namespace Business.Concrete
         IResult Update(User user);
         IResult Delete(User user);
         IDataResult<User> GetById(int Id);
-       public IDataResult<List<OperationClaim>> GetClaims(User user);
+        IDataResult<List<OperationClaim>> GetClaims(int id);
+        IResult EditProfil(User user, string password);
+        IDataResult<User> GetUserByEmail(string email);
         User GetByMail(string mail);
-        
+
+
     }
 }

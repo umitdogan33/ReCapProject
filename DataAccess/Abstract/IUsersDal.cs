@@ -8,6 +8,6 @@ namespace DataAccess.Concrete.EntityFramework
 {
   public interface IUsersDal:IEntityRepository<User>
     {
-        List<OperationClaim> GetClaims(User user);
+        List<OperationClaim> GetClaims(int id);
     }
 }
